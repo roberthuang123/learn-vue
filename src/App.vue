@@ -6,7 +6,9 @@
         <router-link :to="item.url" class="f_nav" :class="{f_active:activeItem == index}">{{item.name}}</router-link>
       </li>
     </ul>
-    <router-view/>
+    <transition name="fade">
+      <router-view class="routeBox"></router-view>
+    </transition>
     <!-- {{message}}/{{reMessage}}
     <button @click="add">&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;&nbsp;</button>
     <button @click="minus">&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;</button>
@@ -98,13 +100,42 @@ export default {
   components: {
     page
   },
-  mounted: function () {
-    $(function () {
-      $('.nav').click(function (e) {
-        $(this).addClass('active')
-        $(this).siblings().removeClass('active')
-      })
-    })
+  created: function () {
+    switch (this.$route.path) {
+      case '/':
+        this.activeItem = 0
+        break
+      case '/animate':
+        this.activeItem = 1
+        break
+      case '/animateOne':
+        this.activeItem = 2
+        break
+      case '/animateTwo':
+        this.activeItem = 3
+        break
+      case '/animateThree':
+        this.activeItem = 4
+        break
+      case '/animateFour':
+        this.activeItem = 5
+        break
+      case '/animateFive':
+        this.activeItem = 6
+        break
+      default:
+        this.activeItem = 0
+        break
+    }
+    // switch (this.$route.path)
+    // {
+    // }
+    // $(function () {
+    //   $('.nav').click(function (e) {
+    //     $(this).addClass('active')
+    //     $(this).siblings().removeClass('active')
+    //   })
+    // })
   },
   watch: {
     // 如果 `question` 发生改变，这个函数就会运行
@@ -130,8 +161,10 @@ export default {
   },
   methods: {
     toSwitch (index) {
-      console.log(index)
-      if (this.activeItem !== index) {
+      if (this.activeItem === index) {
+        $('.routeBox').css('display', 'block')
+      } else {
+        $('.routeBox').css('display', 'none')
         this.activeItem = index
       }
     },
@@ -177,6 +210,15 @@ export default {
 </script>
 
 <style>
+.routeBox{
+  min-height:400px;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 ::-webkit-scrollbar {display:none}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -201,13 +243,19 @@ export default {
 }
 .f_item{
   width:100px;
+  height:20px;
   display: inline-block;
   color:#090909;
-  border:1px solid #ff348a;
+  border-right:1px solid #aaaaaa;
+}
+.f_item:last-child{
+  border:none;
 }
 .f_nav{
+  display: block;
+  width:100%;
+  height:100%;
   text-decoration: none;
-  margin:10px;
   color:mediumturquoise;
 }
 /* .f_nav:hover{

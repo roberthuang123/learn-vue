@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h3>图书选择</h3>
     <ul class="container">
       <li class="f_single" v-for="(item, index) in booksList" :key="index">
         <img class="f_img" :src="item.image"/>
@@ -26,7 +27,6 @@ export default {
       async: true,
       success: function (res) {
         that.booksList = res
-        console.log(that.booksList[0].auther)
       }
     })
   }
