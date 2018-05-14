@@ -1,11 +1,12 @@
 <template>
   <div>
-    <div>第四页</div>
+    <v-counter></v-counter>
     <input v-focus placeholder="请输入内容。。。">
   </div>
 </template>
 
 <script>
+import vCounter from './counter'
 export default {
   directives: {
     focus: {
@@ -14,6 +15,9 @@ export default {
         el.focus()
       }
     }
+  },
+  components: {
+    vCounter
   }
 }
 </script>
